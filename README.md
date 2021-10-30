@@ -39,7 +39,7 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	fmt.Println("File uploaded\nDOWLOAD URL -", downloadLink)
+	fmt.Println("File uploaded\nDOWNLOAD URL -", downloadLink)
 
 	account, err := client.GetAccountDetails()
 	if err != nil {
