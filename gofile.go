@@ -34,6 +34,11 @@ type Account struct {
 	Data   AccountDetails `json:"data"`
 }
 
+func (a *Account) Info() {
+	fmt.Printf("\nACCOUNT INFO\nEMAIL - %s\nTIER - %s\nTOTAL DOWNLOADS - %d\nTOTAL FILES - %d\nTOTAL SIZE - %d\n",
+		a.Data.Email, a.Data.Tier, a.Data.TotalDownloadCount, a.Data.FilesCount, a.Data.TotalSize)
+}
+
 type ResponseUploadFileData struct {
 	DownloadPage string `json:"downloadPage"`
 	Code         string `json:"code"`
@@ -113,20 +118,14 @@ func (c *Client) UploadFile(filePath string) (string, error) {
 		return "", err
 	}
 
-	_ = writer.WriteField("token", c.token)
+	writer.WriteField("token", c.token)
 
 	err = writer.Close()
 	if err != nil {
 		return "", err
 	}
 
-	req, err := http.NewRequest("POST", url, body)
-	if err != nil {
-		return "", err
-	}
-	req.Header.Set("Content-Type", writer.FormDataContentType())
-
-	resp, err := c.client.Do(req)
+	resp, err := http.Post(url, writer.FormDataContentType(), body)
 	if err != nil {
 		return "", err
 	}
@@ -161,9 +160,4 @@ func (c *Client) GetAccountDetails() (Account, error) {
 		return Account{}, err
 	}
 	return r, nil
-}
-
-func (a *Account) Info() {
-	fmt.Printf("\nACCOUNT INFO\nEMAIL - %s\nTIER - %s\nTOTAL DOWNLOADS - %d\nTOTAL FILES - %d\nTOTAL SIZE - %d\n",
-		a.Data.Email, a.Data.Tier, a.Data.TotalDownloadCount, a.Data.FilesCount, a.Data.TotalSize)
 }
