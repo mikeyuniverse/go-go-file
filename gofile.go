@@ -6,11 +6,16 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"mime/multipart"
 	"net/http"
 	"os"
 	"path/filepath"
+)
+
+const (
+	urlGetServer         = "https://api.gofile.io/getServer"
+	urlUploadFile        = "https://%s.gofile.io/uploadFile"
+	urlGetAccountDetails = "https://api.gofile.io/getAccountDetails?token=%s&allDetails=true"
 )
 
 type AccountDetails struct {
@@ -67,8 +72,7 @@ func NewClient(apiToken string) *Client {
 }
 
 func (c *Client) getServer() (Server, error) {
-	url := "https://api.gofile.io/getServer"
-	response, err := c.client.Get(url)
+	response, err := c.client.Get(urlGetServer)
 	if err != nil {
 		return Server{}, err
 	}
@@ -88,10 +92,9 @@ func (c *Client) getServer() (Server, error) {
 func (c *Client) UploadFile(filePath string) (string, error) {
 	server, err := c.getServer()
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
-	// fmt.Println("Server ->", server.Data.Server)
-	url := fmt.Sprintf("https://%s.gofile.io/uploadFile", server.Data.Server)
+	url := fmt.Sprintf(urlUploadFile, server.Data.Server)
 
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -106,6 +109,9 @@ func (c *Client) UploadFile(filePath string) (string, error) {
 		return "", err
 	}
 	_, err = io.Copy(part, file)
+	if err != nil {
+		return "", err
+	}
 
 	_ = writer.WriteField("token", c.token)
 
@@ -140,7 +146,7 @@ func (c *Client) UploadFile(filePath string) (string, error) {
 }
 
 func (c *Client) GetAccountDetails() (Account, error) {
-	url := fmt.Sprintf("https://api.gofile.io/getAccountDetails?token=%s&allDetails=true", c.token)
+	url := fmt.Sprintf(urlGetAccountDetails, c.token)
 	response, err := c.client.Get(url)
 	if err != nil {
 		return Account{}, err
