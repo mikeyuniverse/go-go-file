@@ -54,5 +54,13 @@ func main() {
 		log.Fatal(err)
 	}
 	account.Info()
+	/*
+	ACCOUNT INFO
+	EMAIL - email@mail.com
+	TIER - tier_name
+	TOTAL DOWNLOADS - 23
+	TOTAL FILES - 6
+	TOTAL SIZE - 28374
+	*/
 }
 ```
