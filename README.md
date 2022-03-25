@@ -46,14 +46,12 @@ func main() {
 	downloadLink, err := client.UploadFile("./file.txt")
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	fmt.Println("File uploaded\nDOWNLOAD URL -", downloadLink)
 
 	account, err := client.GetAccountDetails()
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	account.Info()
 }
