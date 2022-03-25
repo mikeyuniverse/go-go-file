@@ -1,30 +1,34 @@
 # go-go-file
 
-## Описание
-Этот проект - обертка над API сервиса gofile - https://gofile.io/
-Сервис позволяет загружать, хранить и делиться файлами. 
+## Description
 
-## Установка
+This project is a wrapper over the gofile service API - gofile.io
+The service allows you to upload, store and share files.
+
+## Install
+
 ```
 go get github.com/mikeyuniverse/go-go-file
 ```
 
-## Возможности
-1. **Загрузить файл** <br>
-Загрузите файл при помощи метода UploadFile. Метод принимает путь к файлу и при успешной загрузке возвращает ссылку на скачивание файла.
-1. **Получить информацию об аккаунте** <br>
-Метод GetAccountDetails позволяет проверить информацию об аккаунте. Метод выводит информацию в консоль.
+## Opportunities
 
-## Авторизация
-Для использования нужен API ключ. Его можно получить при аутентификации в сервисе:<br>
-1. Зайдите на страницу - https://gofile.io/myProfile
-1. Нажмите - "Login with your email"
-1. Получите письмо на почту с ссылкой для входа
-1. Перейдите по ссылке
-1. Раздел "My Profile"
-1. Скопируйте "Api token"
+1. **Upload file** <br>
+Upload a file using the UploadFile method. The method takes the path to the file and returns a link to download the file upon successful upload.
+1. **Get account information** <br>
+The GetAccountDetails method allows you to check account information. The method prints information to the console.
 
-## Пример использования
+## Authorization
+You need an API key to use it. It can be obtained when authenticating in the service:<br>
+1. Go to page - https://gofile.io/myProfile
+1. Click - "Login with your email"
+1. Receive an email with a login link
+1. Follow this link
+1. Chapter "My Profile"
+1. Copy "Api token"
+
+## Usage example
+
 ```go
 package main
 
